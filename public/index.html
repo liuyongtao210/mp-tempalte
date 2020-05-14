@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover" >
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <!-- <title><%= htmlWebpackPlugin.options.title %></title> -->
+    <title>雨辰看疫情</title>
+    <style>
+      @charset "utf-8";html{color:#000;background:#f4f4f4;overflow-y:scroll;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}html *{outline:0;-webkit-text-size-adjust:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}html,body{font-family:sans-serif}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{margin:0;padding:0}input,select,textarea{font-size:100%}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}abbr,acronym{border:0;font-variant:normal}del{text-decoration:line-through}address,caption,cite,code,dfn,em,th,var{font-style:normal;font-weight:500}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:500}q:before,q:after{content:''}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}a:hover{text-decoration:none}ins,a{text-decoration:none}
+      </style>
+      <!-- flexible.css end -->
+      <!-- lib-flexible.js start -->
+      <script>
+      !function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/10;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));
+      </script>
+      <!-- lib-flexible.js end -->
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <script>
+      // alert(navigator.userAgent)
+      (function() {
+        function IEVersion() {
+          var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+          var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器
+          var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器
+          var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+          if (isIE) {
+            var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+            reIE.test(userAgent);
+            var fIEVersion = parseFloat(RegExp["$1"]);
+            if (fIEVersion == 7) {
+              return 7;
+            } else if (fIEVersion == 8) {
+              return 8;
+            } else if (fIEVersion == 9) {
+              return 9;
+            } else if (fIEVersion == 10) {
+              return 10;
+            } else {
+              return 6;//IE版本<=7
+            }
+          } else if (isEdge) {
+            return 'edge';//edge
+          } else if (isIE11) {
+            return 11; //IE11
+          } else {
+            return -1;//不是ie浏览器
+          }
+        }
+
+
+        if(IEVersion() !== -1 && IEVersion() <= 11) {
+          alert('hi，您当前的浏览器版本过低，可能存在安全风险，建议使用高级浏览器。\n' +
+                  '如果是360浏览器，请切换极速模式查看。')
+        }
+
+        var hm = document.createElement("script");
+
+        var code = '';
+        if (window.location.hostname.indexOf('localhost') !== -1) {
+          // 测试
+          code = '4dcddfeb7477cdca1ed6ee98a9890e6c';
+        } else {
+          // 线上
+          if (window.location.hostname.indexOf('zk.yuchen') !== -1) {
+            code = '57df022ddfab97894e0f1fe5fad74d3a';
+          } else {
+            code = 'd64fed5c2cfbad41fe820fe55fc8f010';
+          }
+        }
+
+        hm.src = "https://hm.baidu.com/hm.js?" + code;
+
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+
+
+      $(function(){
+        if (window.location.hostname.indexOf('zk.yuchen') !== -1) {
+          var timestamps;
+          var nonceStrs;
+          var signatures;
+          var url = encodeURIComponent(location.href.split('#')[0]);
+          $.ajax({
+            async: false,
+            url: 'http://zk.yuchen.net.cn/weixin/jsSdk/getJsSdk',
+            type: "get",
+            dataType: "json",
+            data: {url: url},
+            success: function (data) {
+              timestamps = data.data.timestamp;
+              nonceStrs = data.data.nonceStr;
+              signatures = data.data.signature;
+            },
+            error: function (xhr) {
+              console.info("error" + xhr);
+            }
+          });
+
+          wx.config({
+            debug: false,
+            appId: 'wxfea067e1e60af1b9',
+            timestamp: timestamps,
+            nonceStr: nonceStrs,
+            signature: signatures,
+            jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline', 'updateAppMessageShareData', 'updateTimelineShareData']
+            // 功能列表，我们要使用JS-SDK的什么功能  
+          });
+
+          wx.checkJsApi({
+            jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline', 'updateAppMessageShareData', 'updateTimelineShareData'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+            success: function (res) {
+              // 以键值对的形式返回，可用的api值true，不可用为false
+              // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+              console.info("检测的JS接口列表:" + res);
+            }
+          });
+
+          wx.ready(function () {
+            //自定义“分享给朋友”及“分享到QQ”按钮的分享内容
+            wx.updateAppMessageShareData({
+              title: '雨辰看疫情', // 分享标题
+              desc: '“AI+大数据”助力疫情防控！', // 分享描述
+              link: 'http://zk.yuchen.net.cn',
+              imgUrl: 'http://zk.yuchen.net.cn/static/weixin_logo.jpg', // 分享图标 
+              success: function () {
+                // 设置成功
+                console.info("分享给朋友设置成功");
+              }
+            });
+            //自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容（1.4.0）
+
+            wx.updateTimelineShareData({
+              title: '雨辰看疫情\n“AI+大数据”助力疫情防控！', // 分享标题
+              link: 'http://zk.yuchen.net.cn', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              imgUrl: 'http://zk.yuchen.net.cn/static/weixin_logo.jpg', // 分享图标
+              success: function () {
+                // 设置成功
+                console.info("分享到朋友圈设置成功");
+              }
+            });
+
+          });
+          wx.error(function (res) {
+            // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+            console.info("config信息验证失败:" + res);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
